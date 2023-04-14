@@ -77,8 +77,8 @@ const Navbar = () => {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" onClick={logOut}>Logout</a></li>
-                  <li><a class="dropdown-item" >Logout</a></li>
-                  <li><a class="dropdown-item" >Logout</a></li>
+                  {/* <li><a class="dropdown-item" >Logout</a></li>
+                  <li><a class="dropdown-item" >Logout</a></li> */}
                 </ul>
               </div>
             </form>

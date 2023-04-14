@@ -20,6 +20,7 @@ function NewBooking() {
     dummyBooking: false,
   });
   const [loading, setLoading] = useState(false)
+  const [disbale, setDisable] = useState()
   const [booklocation, setBookLocation] = useState()
   const [vehicleType, setVehicleType] = useState()
   const [paymentResult, setPaymentResult] = useState("")
@@ -86,12 +87,14 @@ const handleChangeDate = (e) => {
 
   async function newBooking() {
     try {
+      // setLoading(true)
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/newBooking", { formInputs, token })
       console.log("newBooking response=========>", response.data);
       console.log(response, 'response')
-      toast.success("data inserted Successfully")
       setLoading(false)
+      
+      toast.success("data inserted Successfully")
       setTimeout(() => {
         router.push("/addSchedule")
 
@@ -105,43 +108,51 @@ const handleChangeDate = (e) => {
   const handleSubmit = (event) => {
     event.preventDefault()
     setLoading(true)
+    setDisable(true)
     var regex = /^[a-zA-Z ]*$/;
     var alphaNumeric = /^[a-zA-Z0-9]*$/;
 
     if (!formInputs.bookingRefNo || !formInputs.licenseNo || !formInputs.name || !formInputs.mobile || !formInputs.dateOfBooking || !formInputs.dateOfPayment || !formInputs.totalAmount || !formInputs.paidAmount || !formInputs.paymentBalance) {
       toast.error("Please Provide all the credentials");
       setLoading(false)
+      setDisable(false)
       return;
     }
 
     if (formInputs.mobile.length != 10) {
       toast.error("Please enter 10 digits mobile number");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (formInputs.bookingRefNo.length != 10) {
       toast.error("Please enter 10 alphanumeric bookingRefNo ");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (formInputs.licenseNo.length != 10) {
       toast.error("Please enter 10 alphanumeric license number");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (!alphaNumeric.test(formInputs.bookingRefNo)) {
       toast.error("BookingRefNo shoule be alphanumeric");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (!alphaNumeric.test(formInputs.licenseNo)) {
       toast.error("LicenseNo shoule be alphanumeric");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (!regex.test(formInputs.name)) {
       toast.error("Name shoule be alphabetical");
       setLoading(false)
+      setDisable(false)
       return;
     }
 
@@ -149,12 +160,14 @@ const handleChangeDate = (e) => {
 
       toast.error("Name should have valid length");
       setLoading(false)
+      setDisable(false)
       return;
     }
     if (formInputs.paidAmount > formInputs.totalAmount) {
 
       toast.error("Invalid paid amount");
       setLoading(false)
+      setDisable(false)
       return;
     }
     newBooking()
@@ -371,7 +384,7 @@ const handleChangeDate = (e) => {
 
             <div className="booking-button">
 
-              <Button className="btn-book" type="submit" disabled={loading}>
+              <Button className="btn-book" type="submit" disabled={disbale}>
                 {loading  ? "Loading..." : "Book Now"}
               </Button>
             </div>

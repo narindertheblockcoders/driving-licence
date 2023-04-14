@@ -34,8 +34,8 @@ function AddUser() {
       const res = await axios.post("/api/addUser", { data: inputs })
       const response = res.data.data.data;
       localStorage.setItem("token", response)
-      toast.success("data inserted Successfully")
       setLoading(false)
+      toast.success("data inserted Successfully")
       setTimeout(()=>{
           Router.push("/getUsers")
       },[1000])
@@ -43,8 +43,11 @@ function AddUser() {
       console.log("Error in adduser---->",error);
       if (error.response.status == "500") {
         toast.error("Email already exist");
+        setLoading(false)
         return;
+       
       }
+      // setLoading(false)
     }
   }
   async function getRollname() {
@@ -91,7 +94,7 @@ function AddUser() {
     if (inputs.password !== inputs.confirmPassword) {
       
       toast.error(
-        "Passowrd must contain 8 characters (one uppercase and lowercase letter and number are required."
+        "Confirm password must be same as password."
       );
       setLoading(false)
       return;

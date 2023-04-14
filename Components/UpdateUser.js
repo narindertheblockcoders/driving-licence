@@ -40,8 +40,8 @@ console.log("getuser by id ---------->",response.data.data.data[0])
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/updateUser", { token, data })
       console.log("updateUserById by id response ---------->",response.data)
-      toast.success("data updated Successfully")
       setLoading(false)
+      toast.success("data updated Successfully")
 
       setTimeout(() => {
         Router.push("/getUsers")
@@ -159,7 +159,12 @@ console.log("getuser by id ---------->",response.data.data.data[0])
                   type="email"
                   className="form-control"
                   id="book-input"
-                  placeholder="EmailId" name="emailId" ref={emailId1} defaultValue={userById?.emailId}
+
+                  placeholder="EmailId" 
+                  // name="emailId" 
+                  name={`emailId-${Math.random().toString(36).substring(2, 15)}`}
+                   ref={emailId1} defaultValue={userById?.emailId}
+                
                 />
               </div>
 
@@ -168,7 +173,10 @@ console.log("getuser by id ---------->",response.data.data.data[0])
                   type="password"
                   className="form-control"
                   id="book-input"
-                  placeholder="Password" name="password" ref={password1} />
+                  placeholder="Password" 
+                  // name="password" 
+                  name={`password-${Math.random().toString(36).substring(2, 15)}`}
+                  ref={password1} />
               </div>
               <div className="mb-3 client-row">
                 <input

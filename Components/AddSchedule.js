@@ -681,7 +681,10 @@ const [open, setOpen] = React.useState(false);
 
                                       <div className="two-part-head">
                                       <h6>
-                                          {new Date(item2.dateOfBooking).toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true})  }
+                                          {/* {new Date(item2.dateOfBooking).toLocaleTimeString('en-IN', {hour: 'numeric', minute: 'numeric', hour12: true})  } */}
+                                            {/* {new Date(item2.dateOfBooking).now()} */}
+                                            {/* {new Date(item2.dateOfBooking).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} */}
+                                            {new Date(item2.dateOfBooking).toLocaleTimeString('en-IN', {hour: 'numeric', minute: 'numeric', hour12: true})}
                                         </h6>
                                         <h6>{item2.vehicle}</h6>
                                         <small>Client</small>
