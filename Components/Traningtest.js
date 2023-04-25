@@ -414,13 +414,13 @@ function Traningtest() {
                         Test
                       </a>
                     </div>
-                    {/* <a href="#" class="head-one-four">Test</a> */}
+                    {/* <a href="#" className="head-one-four">Test</a> */}
                     <div className="head-one-main">
                       <div className="head-one-one">
                         <h5>09:30 AM</h5>
                       </div>
                       <div className="head-one-one">
-                        {/* <a href="#" class="head-one-three">Training</a> */}
+                        {/* <a href="#" className="head-one-three">Training</a> */}
                         <a href="#" className="swap-trainer">
                           Swap Trainer
                         </a>
@@ -483,7 +483,7 @@ function Traningtest() {
                         <a href="#" className="swap-trainer">
                           Swap Trainer
                         </a>
-                        {/* <a href="#" class="head-one-four">Test</a> */}
+                        {/* <a href="#" className="head-one-four">Test</a> */}
                       </div>
                     </div>
                     <div className="two-part-head">
@@ -652,7 +652,7 @@ function Traningtest() {
                         <a href="#" className="swap-trainer">
                           Swap Trainer
                         </a>
-                        {/* <a href="#" class="head-one-three">Training</a> */}
+                        {/* <a href="#" className="head-one-three">Training</a> */}
                       </div>
                     </div>
                     <div className="two-part-head">
@@ -724,7 +724,7 @@ function Traningtest() {
                         <a href="#" className="swap-trainer">
                           Swap Trainer
                         </a>
-                        {/* <a href="#" class="head-one-three">Training</a> */}
+                        {/* <a href="#" className="head-one-three">Training</a> */}
                       </div>
                     </div>
                     <div className="two-part-head">

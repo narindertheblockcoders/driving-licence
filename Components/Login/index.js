@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Button } from "react-bootstrap";
-
+import $ from "jquery"
 
 
 
@@ -16,6 +15,9 @@ function Login() {
         emailId: "",
         password: "",
       });
+
+      const router = useRouter()
+
       const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -31,7 +33,7 @@ function Login() {
           localStorage.setItem("token",response.data.data.data)
           setLoading(false)
           setTimeout(()=>{
-              Router.push("/getUsers")
+              router.push("/getUsers")
 
           },[1000])
 
@@ -73,6 +75,26 @@ function Login() {
         
     }
 
+    async function jqueryFn(){
+
+      $(".toggle-password").click(function(){
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+
+        if(input.attr("type") == "password") {
+          input.attr("type", "text");
+        } else{
+          input.attr("type", "password");
+        }
+
+      })
+    }
+
+    useEffect(()=>{
+      jqueryFn()
+    },[])
+
+
     return (
         <>
                 <ToastContainer />
@@ -105,11 +127,13 @@ function Login() {
                                 <input
                                     type="password"
                                     className="form-control"
-                                    id="book-input"
+                                    id="book-inputs" 
                                     placeholder="Password" name="password"
                                     value={formData.password}
                                     onChange={handleChange}
                                 />
+
+                            <span toggle="#book-inputs" className="fa fa-fw fa-eye field-icon toggle-password"></span>
                                
                             </div>
                         </div>
@@ -118,19 +142,20 @@ function Login() {
                         <Button className="btn-book" type="submit" disabled={loading} >
                             {loading ?"Loading...":"Login"}
                         </Button>
+
  
                            
                         </div>
-                       
+                        <Link href="/forgetPassword">
+                        <p className="forget-text">Forget Password</p>
+                        </Link>
                     </form>
 
                 </div>
             </section>
-            <section className="footer">
-                <div className="container">
-                    <p>© 2023 Driving Schedule Software. All Rights Reserved.</p>
-                </div>
-            </section>
+
+
+
         </>
     )
 }

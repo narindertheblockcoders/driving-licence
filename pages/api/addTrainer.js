@@ -4,15 +4,17 @@ export default async function handler(req,res) {
     if(req.method == "POST") {
 
       try{
-            const {token,data} = req.body;
-            console.log("data inadd trainer --->",token,data);
+            const {token} = req.body;
+            const {data} = req.body
+            console.log("token,data---->>>",data.id,token)
+            // console.log("data inadd trainer --->",token,data);
             var config = {
-                method:"post",
-                url:"http://52.9.60.249:6000/api/v1/member/addtrainer",
+                method:"post",  
+                url:"http:6000/api/v1/member/addtrainer",
                 headers:{
                     Authorization: `Bearer ${token}`
                 },
-                data
+                data:data
             };
             await axios(config).then(function (response) {
                 console.log("response",response.data);

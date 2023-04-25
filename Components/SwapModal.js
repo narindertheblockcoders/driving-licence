@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState, useEffect } from 'react';
 import { DatePicker } from 'rsuite';
 import { swapModalSchema } from './Utils/Schema'
@@ -26,14 +28,19 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
   const [errMsg, setErrMsg] = useState(false);
 
   async function onSubmit(values) {
+
+    console.log("swap id here")
+    console.log("values------->>>>",dateInputs)
     setLoading(true)
+
     setErrMsg(false)
-    if (!dateInputs) {
+    if (dateInputs == null) {
       setErrMsg(true)
       return
     }
     console.log(errMsg, "errMsgsubmmitedddddddddd");
-    let newData = {
+
+    const newData = {
       name: values?.name,
       mobile: values?.mobile,
       bookingRefNo: values?.bookingRefNo,
@@ -42,11 +49,12 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
       changeBookingDate: dateInputs,
       id: swapDataId
     }
-    // console.log(newData, '########################form data')
+    
+    console.log(newData,"new dtaa  ewdjewbfhwebhjfejhgjcgfyewawrtgyudfyuawgt6")
     getSwapData(newData)
   }
 
-  const { values, errors, handleBlur,resetForm, handleChange, handleSubmit, touched } =
+  const { values, errors,resetForm, handleChange, handleSubmit } =
 
     useFormik({
       initialValues: {
@@ -55,11 +63,16 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
         bookingRefNo: "",
         location: "",
         vehicleType: "",
+        changeBookingDate:"",
       },
       validationSchema: swapModalSchema,
-      onSubmit,
 
+      validateOnChange: false, 
+      onSubmit,
     });
+
+
+  
 
   async function bookingLocation() {
     try {
@@ -86,21 +99,21 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
 
   const getSwapData = async (newData) => {
     try {
-      
-      // const allData ={newData,swapData}
       const token = localStorage.getItem("token")
       const response = await axios.post("/api/swapBooking", { token: token, data: newData })
-      console.log("response Data for single user in getDataById", response.data.data.data);
+      console.log("response Data for single user in getDataById getSwapData", response.data.data.data);
       setLoading(false)
+      toast.success("Swap successfully")
           resetForm();
           setDateInputs(null)
        
       setShow(false)
-      // schedualDataFn()
+      schedualDataFn()
 
     } catch (error) {
       console.log("Error:::-->", error)
       setShow(false)
+      toast.error(" Please try again")
 
     }
 
@@ -108,11 +121,13 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
 
 
   const handleChangedofBooking = (e) => {
-    if(e){
-      setErrMsg(false)
-      setLoading(false)
-    }
+    // if(e){
+    //   setErrMsg(false)
+    //   setLoading(false)
+    // }
+  
     console.log("hello from  handleChangedofBooking1", e)
+
     const options = {
       second: '2-digit',
       minute: '2-digit',
@@ -122,7 +137,10 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
       year: 'numeric',
     }
     const date = new Intl.DateTimeFormat('en-US', options).format(e) // '12/02/2021'
+
+    console.log(date,"Date for filter")
     setDateInputs(date)
+    
   }
 
   useEffect(() => {
@@ -132,10 +150,10 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
   }, [show])
 
 
-
+  // console.log("hello dateInputs  handleChangedofBooking1", dateInputs)
   return (
     <div>
-
+ <ToastContainer />
       <Modal
         show={show} onHide={handleClose} animation={false}
         size="lg"
@@ -153,9 +171,9 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
           <span className='dateText'>date:{dateInputs}</span>
           <form onSubmit={(e) => handleSubmit(e)}>
             {/* <div> */}
-            <div class="input-main">
+            <div className="input-main">
                                                                                                           
-                                                                    <div class="sclient-box">
+                                                                    <div className="sclient-box">
                  <div className='sclient-div'>
               <input type="text"
                 className="form-control"
@@ -164,9 +182,9 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
                
                 value={values.name}
                 onChange={handleChange}
-                onBlur={handleBlur}
+             
               />
-              {errors?.name && touched?.name && (
+              {errors?.name && (
                 <p className="input-error">{errors?.name}</p>
               )}
               </div>
@@ -175,13 +193,14 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
               <input type="text"
                 className="form-control"
                 id="book-input"
+                maxLength="10"
                 placeholder="Client Phone" name="mobile"
                 
                 value={values.mobile}
                 onChange={handleChange}
-                onBlur={handleBlur}
+           
               />
-              {errors?.mobile && touched?.mobile && (
+              {errors?.mobile  && (
                 <p className="input-error">{errors?.mobile}</p>
               )}
             </div>
@@ -189,7 +208,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
             </div>
 
                                                                       
-            <div class="sclient-box">
+            <div className="sclient-box">
                  <div className='sclient-div'>
               <input type="text"
                 className="form-control input-group"
@@ -198,9 +217,9 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
               
                 value={values.bookingRefNo}
                 onChange={handleChange}
-                onBlur={handleBlur}
+          
               />
-              {errors?.bookingRefNo && touched?.bookingRefNo && (
+              {errors?.bookingRefNo  && (
                 <p className="input-error">{errors?.bookingRefNo}</p>
               )}
             </div>
@@ -210,7 +229,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
                
                 value={values.location}
                 onChange={handleChange}
-                onBlur={handleBlur}
+               
               >
                 <option selected="">Select Location</option>
                 {booklocation?.map((item, idx) => {
@@ -219,7 +238,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
                   )
                 })}
               </select>
-              {errors?.location && touched?.location && (
+              {errors?.location  && (
                 <p className="input-error">{errors?.location}</p>
               )}
 
@@ -227,12 +246,12 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
             </div>
 
                                                              
-            <div class="sclient-box">
+            <div className="sclient-box">
                  <div className='sclient-div'>
               <select className="form-select" id="book-select" name="vehicleType"
                 value={values.vehicleType}
                 onChange={handleChange}
-                onBlur={handleBlur}
+               
               >
                 <option selected="">Select Vehicle Type</option>
                 {vehicleType?.map((item, idx) => {
@@ -241,7 +260,7 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
                   )
                 })}
               </select>
-              {errors?.vehicleType && touched?.vehicleType && (
+              {errors?.vehicleType  && (
                 <p className="input-error">{errors?.vehicleType}</p>
               )}
 
@@ -268,12 +287,12 @@ const SwapModal = ({ show, setShow, swapDataId, schedualDataFn}) => {
                   minutes: 'Minutes',
                   seconds: 'Seconds'
                 }}
-                name="changeBookingDate"
+                // name="changeBookingDate"
                 onChange={(e) => handleChangedofBooking(e)}
-
               />
-
-              {errMsg && <span className='input-error'>*This is a mandatory Field</span>}
+              {errMsg  && (
+                <p className="input-error">Booking  date required</p>
+              )}
 
             </div>
                                                           

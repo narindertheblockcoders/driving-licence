@@ -96,8 +96,7 @@ const handleChangeDate = (e) => {
       
       toast.success("data inserted Successfully")
       setTimeout(() => {
-        router.push("/addSchedule")
-
+        router.push("/bookingList")
       }, [1000])
 
     } catch (error) {
@@ -112,7 +111,7 @@ const handleChangeDate = (e) => {
     var regex = /^[a-zA-Z ]*$/;
     var alphaNumeric = /^[a-zA-Z0-9]*$/;
 
-    if (!formInputs.bookingRefNo || !formInputs.licenseNo || !formInputs.name || !formInputs.mobile || !formInputs.dateOfBooking || !formInputs.dateOfPayment || !formInputs.totalAmount || !formInputs.paidAmount || !formInputs.paymentBalance) {
+    if (!formInputs.bookingRefNo || !formInputs.licenseNo || !formInputs.name || !formInputs.mobile || !formInputs.dateOfBooking || !formInputs.dateOfPayment || !formInputs.totalAmount) {
       toast.error("Please Provide all the credentials");
       setLoading(false)
       setDisable(false)
@@ -224,6 +223,7 @@ const handleChangeDate = (e) => {
                   value={formInputs.bookingRefNo}
                   onChange={handleChange}
                   placeholder="Booking Ref No."
+                  maxLength={10}
                 />
 
               </div>
@@ -240,8 +240,10 @@ const handleChangeDate = (e) => {
 
               </div>
               <div className="mb-3 booking-row">
-                <select className="form-select" id="book-select" name="location" value={formInputs.location} onChange={handleChange}>
-                  <option selected="">Select Location</option>
+                <select className="form-select" id="book-select" name="location" 
+                // value={formInputs.location} 
+                onChange={handleChange}>
+                  <option >Select Location</option>
                   {booklocation?.map((item) => {
 
                     return (

@@ -4,14 +4,17 @@ export default async function handler(req,res) {
     if(req.method == "POST") {
 
       try{
-            const id = req.body;
+            const {id} = req.body;
             const {token} = req.body;
+
+            // console.log(id ,"freeddd")
+
             var config = {
                 method:"post",
-                url:"http://192.168.1.136:6000/api/v1/member/getById",
+                url:"http://192.168.1.136:6000/api/v1/member/feedback",
                 headers:{
                     Authorization: `Bearer ${token}`
-                },data:id
+                },data:{id:id}
             };
             await axios(config).then(function (response) {
                 console.log("response",response.data);

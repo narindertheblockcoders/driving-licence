@@ -36,7 +36,6 @@ function GetUsers() {
       getAllUsers()
       return;
     }
-
    
     setDataSearch(search)
     const filterData = inputs?.filter((item) => {
@@ -269,11 +268,7 @@ function GetUsers() {
           
         />
       </section>
-      <section className="footer">
-        <div className="container">
-          <p>© 2023 Driving Schedule Software. All Rights Reserved.</p>
-        </div>
-      </section>
+ 
 
 
 

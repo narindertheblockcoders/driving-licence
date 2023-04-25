@@ -46,16 +46,17 @@ export const swapModalSchema = yup.object().shape({
   mobile:  yup.string()
   .required("Mobile No. is required")
   .matches(phoneRegExp, 'Phone number is not valid')
-  .min(10, "to short")
-  .max(10, "too long"),
-  bookingRefNo: yup.string().min(2).max(10).required("Booking Ref.No. is required"),
+  .min(10, "Invalid mobile number"),
+  // .max(10, "too long"),first
+  bookingRefNo: yup.string().min(2).required("Booking Ref.No. is required"),
   location:yup.string().required("Location is required"),
-  vehicleType:yup.string().required("Vehicla type is required"),
+  vehicleType:yup.string().required("Vehicle type is required"),
+  // changeBookingDate:yup.string().required("Booking type is required"),
 });
+
 
 export const addTrainerModalSchema = yup.object().shape({
 
-  trainer:yup.string().required("Trainer is required"),
+  trainerid:yup.string().required("Please select trainer"),
   
 });
-

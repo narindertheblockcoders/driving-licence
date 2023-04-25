@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./ui/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
-function AddClient() {
+function UpdateClient() {
   const [formData, setFormData] = useState({
     clientName: "",
     clientMobile: "",
@@ -21,29 +21,55 @@ function AddClient() {
 
   const router = useRouter();
 
+  const id = router.query;
+
+  async function getAllClients() {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post("/api/allClients", { token: token });
+      const response = res.data.data;
+
+      console.log(response.data, "All clients data here.");
+
+      const filterData = response.data?.filter((item) => {
+        const name = item?.id;
+        return name?.toLowerCase().includes(id?.toLowerCase());
+      });
+      console.log(filterData,"value set dataa")
+  
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(()=>{
+    getAllClients()
+  })
+
+
+  console.log(id, "query id");
+
+
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setFormData((values) => ({ ...values, [name]: value }));
     setFormError(validate(formData));
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setFormError({
-      ...formError,
-      [name]: "",
-    });
+    if (formData.licenseState == null) {
+      formError.licenseState(false);
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let formE = validate(formData);
-    setFormError(formE);
-    setIsSubmit(true);
 
-    if (Object.keys(formE).length == 0 && Issubmit) {
+    setFormError(validate(formData));
+    setIsSubmit(true);
+    console.log("secnd");
+    if (Object.keys(formError).length == 0 && Issubmit) {
+      // registerUser(data1)
       addClientData(formData);
     }
   };
@@ -53,7 +79,7 @@ function AddClient() {
       console.log(formData, "form data here for sneding api");
       setloading(true);
       const token = localStorage.getItem("token");
-      const response = await axios.post("/api/addClient", {
+      const response = await axios.post("/api/updateClient", {
         token: token,
         data: formData,
       });
@@ -128,7 +154,7 @@ function AddClient() {
       <section className="client">
         <div className="container">
           <div className="client-head">
-            <h2>Add Client</h2>
+            <h2>Update Client</h2>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="client-content">
@@ -193,7 +219,6 @@ function AddClient() {
                 />
                 <p className={"input-error"}>{formError.queryState}</p>
               </div>
-
               <div className="mb-3 client-row" id="client-reminder">
                 <label htmlFor="">Reminder Call</label>
                 <div>
@@ -223,7 +248,7 @@ function AddClient() {
               </div>
               <div className="client-button">
                 <button className="btn-book" type="submit" disabled={disable}>
-                  {loading ? "Loading..." : "Add Client"}
+                  {loading ? "Loading..." : "Update Client"}
                 </button>
               </div>
             </div>
@@ -233,4 +258,4 @@ function AddClient() {
     </>
   );
 }
-export default AddClient;
+export default UpdateClient;

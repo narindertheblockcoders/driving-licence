@@ -76,24 +76,24 @@ console.log("getuser by id ---------->",response.data.data.data[0])
     var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     var regex = /^[a-zA-Z ]*$/;
 
-    if (!emailId || !password || !confirmPassword || !name || !roleId || !contactNo || !status) {
-      toast.error("Please Provide all the credentials");
-      return;
+    // if (!emailId || !password || !confirmPassword || !name || !roleId || !contactNo || !status) {
+    //   toast.error("Please Provide all the credentials");
+    //   return;
 
-    }
+    // }
 
     if (!data?.emailId.includes(".com")) {
       toast.error("Please provide valid email Address");
       return;
     }
 
-    if (!regularExpression.test(data?.password)) {
+    // if (!regularExpression.test(data?.password)) {
 
-      toast.error(
-        "Passowrd must contain 8 characters (one uppercase and lowercase letter and number are required."
-      );
-      return;
-    }
+    //   toast.error(
+    //     "Passowrd must contain 8 characters (one uppercase and lowercase letter and number are required."
+    //   );
+    //   return;
+    // }
     if (data?.password !== data?.confirmPassword) {
 
       toast.error(
@@ -218,7 +218,7 @@ console.log("getuser by id ---------->",response.data.data.data[0])
                   id="book-input"
                   placeholder="ContactNo" name="contactNo" ref={contactNo1} defaultValue={userById?.contactNo} />
               </div>
-              <select class="form-select" aria-label="Default select example" name="status" ref={status1}  >
+              <select className="form-select" aria-label="Default select example" name="status" ref={status1}  >
                 <option selected={userById?.status == 1 ? true : false} value="1">Active</option>
                 <option selected={userById?.status == 0 ? true : false} value="0" >Disable</option>
               </select>

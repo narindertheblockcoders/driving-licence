@@ -1,9 +1,10 @@
+import BookingList from '@/Components/BookingList'
 import React from 'react'
-import AddSchedule from '@/Components/AddSchedule'
 
 function addSchedule() {
   return (
-    <AddSchedule />
+    <BookingList/>
+
   )
 }
 

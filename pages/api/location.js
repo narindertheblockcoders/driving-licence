@@ -8,7 +8,7 @@ export default async function handler(req,res)
             const {token} = req.body
             var config = {
                 method:"post",
-                url:"http://52.9.60.249:6000/api/v1/member/receivelocation",
+                url:"http://192.168.1.136:6000/api/v1/member/receivelocation",
                 headers:{
                     Authorization: `Bearer ${token}`
                 },
