@@ -11,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import Head from "next/head";
 import OwlCarousel from 'react-owl-carousel3';
+import dynamic from "next/dynamic";
 
 function BookingList() {
   const [scheduleData, setScheduleData] = useState();
@@ -46,7 +47,7 @@ function BookingList() {
         (a, b) => a.dummyBooking - b.dummyBooking
       );
       setScheduleData(numAscending);
-      // console.log("numAscending---------------->", numAscending);
+      console.log("numAscending---------------->", numAscending);
     } catch (error) {
       console.log("Error:", error);
     }
@@ -95,7 +96,7 @@ function BookingList() {
     vehicalBooking();
     bookingLocation();
     currentDatePicker();
-  }, []);
+  }, [added]);
 
   useEffect(() => {
     getDataByDate();
@@ -135,8 +136,8 @@ function BookingList() {
       return name?.toLowerCase().includes(search?.toLowerCase());
     });
     // setSearchData(filterData)
-  setScheduleData(filterData)
-    // setDataByDate(filterData);
+
+    setDataByDate(filterData);
 
     // if(!e){
 
@@ -152,7 +153,7 @@ function BookingList() {
   console.log(open, "open here");
 
   const DatePicker = (e) => {
-    // console.log("hellloooooooooooo", e.target.value);
+    console.log("hellloooooooooooo", e.target.value);
     setDate3(null);
     const dateObj = new Date(e.target.value);
     const monthStr = dateObj.toLocaleString("default", { month: "short" });
@@ -360,7 +361,7 @@ function BookingList() {
     className="owl-theme"
     loop 
     margin={0}
-    width={10} 
+    // wiaddedd={10} 
     autoWidth={100}
     nav
 >
@@ -426,7 +427,7 @@ function BookingList() {
                                 <h3>{item.place}</h3>
                               </div>
 
-                              {scheduleData?.map((item2, idx2) => {
+                              {dataByDate?.map((item2, idx2) => {
                                 if (item2?.location === item?.id) {
                                   return (
                                     <>
@@ -615,7 +616,7 @@ function BookingList() {
     </>
   );
 }
-export default BookingList;
+export default dynamic(()=> Promise.resolve(BookingList),{ssr:false});
 
 // export async function getServerSideProps(context) {
 //   const { params } = await context;

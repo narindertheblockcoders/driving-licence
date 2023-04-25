@@ -6,6 +6,8 @@ import $ from "jquery"
 import OwlCarousel from 'react-owl-carousel3';
 import Head from "next/head";
 import AddScheduleModal from "./AddScheduleModal";
+import dynamic from "next/dynamic";
+
 
 function Schedule() {
   const [scheduleData, setScheduleData] = useState();
@@ -1244,4 +1246,5 @@ async function modalShowFn(e){
     </>
   );
 }
-export default Schedule;
+export default dynamic(()=> Promise.resolve(Schedule),{ssr:false});
+
