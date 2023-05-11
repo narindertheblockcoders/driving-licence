@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import Script from "next/script";
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-time-picker/dist/TimePicker.css';
+// import 'react-clock/dist/Clock.css';
 
 
 export default function App({ Component, pageProps }) {

@@ -217,11 +217,11 @@ function AddUser() {
         
         </div>
       </section>
-      <section className="footer">
+      {/* <section className="footer">
         <div className="container">
           <p>© 2023 Driving Schedule Software. All Rights Reserved.</p>
         </div>
-      </section>
+      </section> */}
     </>
   )
 }

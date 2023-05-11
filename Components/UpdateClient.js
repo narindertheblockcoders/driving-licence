@@ -18,61 +18,69 @@ function UpdateClient() {
   const [disable, setDisable] = useState(false);
   const [formError, setFormError] = useState({});
   const [Issubmit, setIsSubmit] = useState(false);
+  const [dateFilter, setDateFilter] = useState()
+
 
   const router = useRouter();
 
-  const id = router.query;
-
+  const {uid} = router.query;
+// console.log("object ---->>",uid)
   async function getAllClients() {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post("/api/allClients", { token: token });
-      const response = res.data.data;
-
-      console.log(response.data, "All clients data here.");
-
-      const filterData = response.data?.filter((item) => {
-        const name = item?.id;
-        return name?.toLowerCase().includes(id?.toLowerCase());
-      });
-      console.log(filterData,"value set dataa")
-  
-
+      const res = await axios.post("/api/getClientById", { token: token,id:uid });
+      const response = res.data.data.data;
+      // console.log(response.data, "All clients data here.");
+      setFormData(response)
     } catch (err) {
       console.log(err);
     }
   }
 
+
+
   useEffect(()=>{
     getAllClients()
-  })
+  },[uid])
 
 
-  console.log(id, "query id");
+  // console.log(formData, "formDataformData");
 
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setFormData((values) => ({ ...values, [name]: value }));
-    setFormError(validate(formData));
 
-    if (formData.licenseState == null) {
-      formError.licenseState(false);
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setFormError({
+      ...formError,
+      [name]: "",
+    });
+
+    // setFormError(validate(formData));
+    // if (formData.licenseState == null) {
+    //   formError.licenseState(false);
+    // }
+
+
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    setFormError(validate(formData));
+let formE = validate(formData);
+    setFormError(formE);
     setIsSubmit(true);
-    console.log("secnd");
-    if (Object.keys(formError).length == 0 && Issubmit) {
-      // registerUser(data1)
+
+    if (Object.keys(formE).length == 0 && Issubmit) {
       addClientData(formData);
     }
+
   };
+
 
   async function addClientData(formData) {
     try {
@@ -146,6 +154,7 @@ function UpdateClient() {
     }
     return errors;
   };
+// console.log("object form data--->",formData)
 
   return (
     <>
@@ -165,7 +174,8 @@ function UpdateClient() {
                   id="book-input"
                   placeholder="Name"
                   name="clientName"
-                  value={formData.clientName}
+                  defaultValue={formData?.clientName}
+                  // value={formData.clientName}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.clientName}</p>
@@ -178,7 +188,8 @@ function UpdateClient() {
                   placeholder="Mobile"
                   name="clientMobile"
                   maxLength="10"
-                  value={formData.clientMobile}
+                  // value={formData.clientMobile}
+                  defaultValue={formData.clientMobile}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.clientMobile}</p>
@@ -190,7 +201,8 @@ function UpdateClient() {
                   id="book-input"
                   placeholder="License Type"
                   name="clientLicenseType"
-                  value={formData.clientLicenseType}
+                  // value={formData.clientLicenseType}
+                  defaultValue={formData.clientLicenseType}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.clientLicenseType}</p>
@@ -202,7 +214,8 @@ function UpdateClient() {
                   id="book-input"
                   placeholder="License State"
                   name="licenseState"
-                  value={formData.licenseState}
+                  // value={formData.licenseState}
+                  defaultValue={formData.licenseState}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.licenseState}</p>
@@ -214,7 +227,8 @@ function UpdateClient() {
                   id="book-input"
                   placeholder="Query Status"
                   name="queryState"
-                  value={formData.queryState}
+                  // value={formData.queryState}
+                  defaultValue={formData.queryState}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.queryState}</p>
@@ -228,7 +242,7 @@ function UpdateClient() {
                     id="client-input"
                     placeholder="Date of client"
                     name="reminderCall"
-                    value={formData.reminderCall}
+                    defaultValue={formData?.reminderCall ? new Date(formData.reminderCall).toISOString().slice(0, 10) : ""}
                     onChange={handleChange}
                   />
                   <p className={"input-error"}>{formError.reminderCall}</p>
@@ -241,7 +255,8 @@ function UpdateClient() {
                   id="client-text"
                   placeholder="Feedback"
                   name="feedback"
-                  value={formData.feedback}
+                  // value={formData.feedback}
+                  defaultValue={formData.feedback}
                   onChange={handleChange}
                 />
                 <p className={"input-error"}>{formError.feedback}</p>

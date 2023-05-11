@@ -33,7 +33,8 @@ function BookingList() {
   const [loading, setLoading] = useState(false);
   const [itemId, setItemId] = useState();
   const [open, setOpen] = React.useState(false);
-
+  const [ selectedId, setSelectedId] = useState(0)
+  const [halfHour, setHalfHour] = useState()
   async function schedualDataFn() {
     try {
       const token = localStorage.getItem("token");
@@ -67,6 +68,7 @@ function BookingList() {
       const token = localStorage.getItem("token");
       const response = await axios.post("/api/location", { token: token });
       setBookLocation(response.data.data.data);
+      console.log("first location-->",response.data.data.data)
     } catch (error) {
       console.log("Error:", error);
     }
@@ -102,11 +104,6 @@ function BookingList() {
     getDataByDate();
   }, [leapYear, scheduleData]);
 
-  // useEffect(() => {
-
-  //   dayPicker()
-
-  // }, [convertedDate])
 
   function handleModalFn(e) {
     setSwapDataId(e);
@@ -119,9 +116,6 @@ function BookingList() {
   }
 
   const SearchFn = (e) => {
-    //  if(e.target.value ){
-    //    setOpen(true);
-    // }
 
     const search = e.target.value;
     console.log(search, "searchhhhhhhhh");
@@ -177,23 +171,12 @@ function BookingList() {
     const dateObj = new Date();
     const monthStr = dateObj.toLocaleString("default", { month: "short" });
     const formattedDateStr = `${dateObj.getFullYear()}-${monthStr}`;
-    // console.log(formattedDateStr, monthStr, dateObj, 'fffffffffffffffffffffffffff')
-
-    //     const dateObj1 = new Date();
-    // const monthStr1 = dateObj1.toLocaleString('default', { month: 'long' });
-    // const formattedDateStr1 = `${monthStr1} ${dateObj1.getFullYear()}`;
-
     const date2 = new Date().toLocaleDateString();
     const d = date2.split("/");
-    // console.log(date2, d, 'date 2222');
-
     const convertedDate = formattedDateStr.split("-")[1];
     console.log(convertedDate, "ccccccccccccccccccccnnnnnnn");
-    // console.log(formattedDateStr, '<=========@@@@@@@@@@@@@@====formattexd');
-    // const formattedDate = formattedDateStr?.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     setYearMonth(`${d[2]}-${d[1]}`);
     setDate3(`${d[2]}-${d[1]}`);
-    // setConvertedDate(monthName)
     dayPicker(convertedDate);
   };
 
@@ -226,9 +209,7 @@ function BookingList() {
     }
 
     if (convertedDate == "Feb") {
-      // console.log("onlyYear------@###@@@@@@@@@@@@@@@@@@@@@#######################---->>>",leapYear);
       if ((leapYear % 4 == 0 && 0 != leapYear % 100) || 0 == leapYear % 400) {
-        // console.log("onlyYear---------->>>",leapYear);
         for (let i = 1; i <= 29; i++) {
           temp.push(`${i} ${convertedDate}`);
         }
@@ -244,18 +225,10 @@ function BookingList() {
     setDatePicker(temp);
   };
 
-  // console.log(" yearMonth value out side function -->", yearMonth)
+  async function filterData(item,i) {
+    console.log(item,"iteme herer")
 
-  async function filterData(item) {
-
-    $(document).ready(function(){
-      $("tabsActive").click(function(){
-        $("nav-link").removeClass("active");
-      });
-    });
-
-
-    // console.log(" filterData object item-->",item);
+    setSelectedId(i)
     const filterValue = scheduleData?.filter((item2) => {
       const dateValue = item2.dateOfBooking;
       const date = new Date(dateValue);
@@ -267,10 +240,8 @@ function BookingList() {
     });
 
     setDataByDate(filterValue);
-    // setSearchData(filterValue)
-
-    // setScheduleData(filterValue)
   }
+
 
   async function getDataByDate() {
     const date1 = new Date();
@@ -287,9 +258,9 @@ function BookingList() {
       return formattedDate === formattedDate1;
     });
     setDataByDate(filterValue);
-    // setSearchData(filterValue)
   }
-  console.log("first scheduleData--->", scheduleData);
+  console.log("first dataByDate--->", dataByDate);
+
   return (
     <>
       <Navbar />
@@ -306,6 +277,10 @@ function BookingList() {
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/> */}
+  {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> */}
+  {/* <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> */}
 </Head>
 
       <section className="booking-tabs" id="add-schedule">
@@ -369,7 +344,7 @@ function BookingList() {
                   <button
                     className="tabsActive "
                     id="pills-home-tab"
-                    data-bs-toggle="pill"
+                    // data-bs-toggle="pill"
                     data-bs-target="#pills-home"
                     type="button"
                     role="tab"
@@ -382,19 +357,21 @@ function BookingList() {
                   </button>
                 </li>
 
-                {datePicker?.map((item) => {
+                {datePicker?.map((item,i) => {
+
                   return (
                     <li className="nav-item" role="presentation">
                       <button
-                        className="nav-link item"
+                        className={selectedId == i? "nav-link item active" : "nav-link item   "}
                         id="pills-profile-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-profile"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-profile"
-                        aria-selected="false"
-                        onClick={() => filterData(item)}
+                        // data-bs-toggle="pill"
+                        // onnClick={()=>}
+                        // data-bs-target="#pills-profile"
+                        // type="button"
+                        // role="tab"
+                        // aria-controls="pills-profile"
+                        // aria-selected="false"
+                        onClick={() => filterData(item,i)}
                       >
                         {item}
                       </button>
@@ -406,7 +383,6 @@ function BookingList() {
               </ul>
             </div>
           <div className="main-tabs">
- 
 
             <div className="texts-tab">
               <div className="tab-content" id="pills-tabContent">
@@ -424,7 +400,7 @@ function BookingList() {
                           <>
                             <div key={idx} className="same-two-part ">
                               <div className="head-one">
-                                <h3>{item.place}</h3>
+                                <h3>{item.location}</h3>
                               </div>
 
                               {dataByDate?.map((item2, idx2) => {
@@ -538,46 +514,8 @@ function BookingList() {
 
                               <></>
 
-                              <div className="timeset">
-                                <ul>
-                                  <li>9:30 AM</li>
-                                  <li>10:00 AM</li>
-                                  <li>10:30 AM</li>
-                                </ul>
-                              </div>
-                              {/* <div className="two-part-head">
-                          <h6>HR Road Ranger</h6>
-                          <small>Client</small>
-                          <span> William (0435906388)</span>
-                          <small>Booking Ref. no. </small>
-                          <span>3253066220</span>
-                          <small>Driving License no. </small>
-                          <span>109534908</span>
-                          <small>Date Booking </small>
-                          <p>11 Dec 2023</p>
-                          <span>
-                            {" "}
-                            8 Dec 2021 <strong>(First Booking)</strong>
-                          </span>
-                        </div> */}
-                              <div className="timeset">
-                                <ul>
-                                  <li>9:30 AM</li>
-                                  <li>10:00 AM</li>
-                                  <li>10:30 AM</li>
-                                  <li>11:00 AM</li>
-                                  <li>11:30 AM</li>
-                                  <li>12:00 PM</li>
-                                  <li>12:30 PM</li>
-                                  <li>01:30 AM</li>
-                                  <li>02:00 AM</li>
-                                  <li>02:30 AM</li>
-                                  <li>03:00 AM</li>
-                                  <li>03:30 AM</li>
-                                  <li>04:00 PM</li>
-                                  <li>04:30 PM</li>
-                                </ul>
-                              </div>
+                       
+                        
                             </div>
                           </>
                         );
@@ -589,6 +527,8 @@ function BookingList() {
             </div>
           </div>
         </div>
+
+
 
         <SwapModal
           show={show}

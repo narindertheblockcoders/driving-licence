@@ -247,7 +247,7 @@ const handleChangeDate = (e) => {
                   {booklocation?.map((item) => {
 
                     return (
-                      <option value={item.id}>{item.place}</option>
+                      <option value={item.id}>{item.location}</option>
                     )
                   })}
 
@@ -279,6 +279,7 @@ const handleChangeDate = (e) => {
               <div className="mb-3 booking-row">
                 <input
                   type="number"
+                  maxLength={10}
                   className="form-control"
                   id="book-input"
                   name="mobile"
@@ -393,11 +394,7 @@ const handleChangeDate = (e) => {
           </form>
         </div>
       </section>
-      <section className="footer">
-        <div className="container">
-          <p>© 2023 Driving Schedule Software. All Rights Reserved.</p>
-        </div>
-      </section>
+
 
     </>
   )

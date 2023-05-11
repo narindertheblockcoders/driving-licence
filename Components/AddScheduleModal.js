@@ -5,28 +5,38 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import AddSchWData from "./AddSchWData";
+import $ from "jquery"
 
-const AddScheduleModal = (show, setShow) => {
-  const handleClose = () => setShow(false);
+const AddScheduleModal = ({ show, setShow, trainerName, trainerId, date, year }) => {
+  // console.log(trainerName,"to see props are working or not")
+  // console.log(date,"to  date")
+  // console.log(year,"to see year")
+  // console.log(date,name,year,"date___________")
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+  // show={show} onHide={handleClose} animation={false}
+
   const [secondShow, setSecondShow] = useState()
-  const [selectTrainer, setSelectTrainer] = useState()
+  const [selectTrainer, setSelectSchedul] = useState()
 
 
-  async function modalShowFn(e){
-    console.log(e,"class here")
-    if(selectTrainer == null){
+  async function modalShowFn(e) {
+    console.log(e, "class here")
+    if (selectTrainer == null) {
       toast.error("Please select schedule type.")
-    }else{
+    } else {
       setSecondShow(e)
     }
+
   }
 
-  console.log(selectTrainer,"second toggle")
+  console.log(secondShow, "second toggle")
 
   return (
     <>
-    <ToastContainer/>
-      <div  class="modal add-first-modal" id="exampleModalToggle3"
+      <ToastContainer />
+      <div class="modal add-first-modal" id="exampleModalToggle3"
         aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -51,7 +61,7 @@ const AddScheduleModal = (show, setShow) => {
                     name="inlineRadioOptions"
                     id="inlineRadio1"
                     value="1"
-                    onClick={(e)=>setSelectTrainer(e.target.value)}
+                    onClick={(e) => setSelectSchedul(e.target.value)}
                   />
                   <label class="form-check-label" for="inlineRadio1">
                     Only Training
@@ -64,7 +74,7 @@ const AddScheduleModal = (show, setShow) => {
                     name="inlineRadioOptions"
                     id="inlineRadio2"
                     value="2"
-                    onClick={(e)=>setSelectTrainer(e.target.value)}
+                    onClick={(e) => setSelectSchedul(e.target.value)}
                   />
                   <label class="form-check-label" for="inlineRadio2">
                     Training and Test
@@ -77,7 +87,7 @@ const AddScheduleModal = (show, setShow) => {
                     name="inlineRadioOptions"
                     id="inlineRadio3"
                     value="3"
-                    onClick={(e)=>setSelectTrainer(e.target.value)}
+                    onClick={(e) => setSelectSchedul(e.target.value)}
                   />
                   <label class="form-check-label" for="inlineRadio3">
                     Only Test
@@ -87,12 +97,12 @@ const AddScheduleModal = (show, setShow) => {
             </div>
             <div class="modal-footer">
               <button
-                class="btn btn-primary model-next"
-                data-bs-toggle={secondShow}
+                onClick={() => modalShowFn("modal")}
                 data-bs-target="#exampleModalToggle4"
-                onClick={()=> modalShowFn("modal")}
+                data-bs-toggle={secondShow ? "modal" : ""}
+                class="btn btn-primary model-next"
               >
-                {" "}
+
                 Next
               </button>
             </div>
@@ -101,7 +111,7 @@ const AddScheduleModal = (show, setShow) => {
       </div>
 
 
-<AddSchWData trainerId={selectTrainer} />
+      <AddSchWData trainerId={{ selectTrainer, date, year, trainerName, trainerId }} />
     </>
 
   );

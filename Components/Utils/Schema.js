@@ -60,3 +60,8 @@ export const addTrainerModalSchema = yup.object().shape({
   trainerid:yup.string().required("Please select trainer"),
   
 });
+export const swapTrainerModalSchema = yup.object().shape({
+
+  trainerId:yup.string().required("Please select trainer"),
+  
+});

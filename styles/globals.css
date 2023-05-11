@@ -584,6 +584,7 @@ section.booking-tabs .main-tabs .nav-item:first-child {
     font-weight: 600;
     color: #022853;
     margin: 0;
+    white-space: nowrap;
 }
 
 .tt-payment {
@@ -637,7 +638,7 @@ section.booking-tabs .main-tabs .nav-item:first-child {
     font-size: 12px;
     border-radius: 4px;
     text-decoration: none;
-    padding: 2px 6px;
+    padding: 5px 8px;
 }
 
 .swap-trainer {
@@ -1254,10 +1255,16 @@ section.booking-tabs .custom-modell {
     flex-direction: column;
     margin-bottom: 20px;
 }
-#autoflexx{padding-top: 20px; margin-left: 0px;}
-#input-group{
+
+#autoflexx {
+    padding-top: 20px;
+    margin-left: 0px;
+}
+
+#input-group {
     flex-wrap: nowrap !important;
 }
+
 select.form-select {
     background-color: #fbfbfb;
     font-size: 14px;
@@ -1599,6 +1606,13 @@ div#training #traing-main .head-one-main .head-one-one .head-one-three {
     font-weight: 700;
 }
 
+.training-div {
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .head-one-three {
     border: unset;
     background: #BFD7FF;
@@ -1606,7 +1620,7 @@ div#training #traing-main .head-one-main .head-one-one .head-one-three {
     font-size: 12px;
     text-decoration: unset;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 5px 8px;
     font-weight: 700;
 }
 
@@ -1628,7 +1642,7 @@ div#training #traing-main .head-one-main .head-one-one .head-one-four {
     font-size: 12px;
     text-decoration: unset;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 5px 8px;
     font-weight: 700;
 }
 
@@ -1673,7 +1687,7 @@ section.trainers .trainers-flex {
 }
 
 section.trainers .trainers-flex {
-width: 15%;
+    width: 15%;
 }
 
 section.trainers .head-trainers h2 {
@@ -1682,7 +1696,13 @@ section.trainers .head-trainers h2 {
     font-weight: 700;
     margin-bottom: 32px;
 }
-.tabs-head{float: left; width: 100%; display: flex; overflow: scroll;}
+
+.tabs-head {
+    float: left;
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+}
 
 section.trainers .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
@@ -1901,6 +1921,20 @@ section.trainers .nav-pills .nav-link {
     padding: 15px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.trainerhover-btns {
+    display: none;
+}
+
+.trainerhover-btns:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.trainer-timings:hover .trainerhover-btns {
+    display: flex;
 }
 
 .trainer-timings span {
@@ -1932,7 +1966,8 @@ section.trainers .nav-pills .nav-link {
     opacity: 1;
     color: white;
 }
-.trainer-opicty:hover a{
+
+.trainer-opicty:hover a {
     color: white !important;
     text-decoration: none !important
 }
@@ -1944,7 +1979,6 @@ section.trainers .nav-pills .nav-link {
     width: 100%;
     float: left;
     padding: 100px 0;
-    height: 87vh;
 }
 
 .client h2 {
@@ -2046,7 +2080,7 @@ section.trainers .nav-pills .nav-link {
     font-weight: 700;
     color: white;
     border-radius: 5px;
-    
+
 }
 
 .client #client-reminder {
@@ -2055,19 +2089,21 @@ section.trainers .nav-pills .nav-link {
     /* align-items: center; */
 }
 
-input:focus{
+input:focus {
     box-shadow: none !important;
     outline: none !important;
     /* border: none !important ; */
-    border-color: #dee2e6    !important;
+    border-color: #dee2e6 !important;
 }
 
-input::placeholder{
+input::placeholder {
     color: #74777B !important;
 }
-textarea::placeholder{
+
+textarea::placeholder {
     color: #74777B !important;
 }
+
 .client #client-reminder label {
     color: #114B8D;
     font-size: 16px;
@@ -2221,17 +2257,17 @@ textarea::placeholder{
     font-size: 15px !important;
 }
 
- #client-dialog {
+#client-dialog {
     top: 50%;
     transform: translateY(-50%) !important;
 }
 
- #client-dialog #client-header {
+#client-dialog #client-header {
     border: unset !important;
     padding: 20px 20px 0px 20px;
 }
 
- #client-dialog #client-header h1 {
+#client-dialog #client-header h1 {
     color: #2F55A2;
     font-size: 24px;
     font-weight: bold;
@@ -2271,7 +2307,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
- #client-dialog .client-body {
+#client-dialog .client-body {
     padding: 15px 20px 20px 20px;
     color: #535353;
     font-size: 16px;
@@ -2448,10 +2484,10 @@ label {
     box-shadow: none !important;
 }
 
-.deleteModals .modal-body h2{
+.deleteModals .modal-body h2 {
     font-size: 24px;
     font-weight: bold;
-    color: #2F55A2 ;
+    color: #2F55A2;
 
 }
 
@@ -2587,24 +2623,25 @@ label {
     width: 100% !important;
     margin-top: 5px;
 }
-.owl-carousel .nav-link.active{
-color: #2F55A2;
-font-weight: 600 !important;
-background-color: unset !important;
-border-bottom: 2px solid #2F55A2;
-border-radius: unset !important;
+
+.owl-carousel .nav-link.active {
+    color: #2F55A2;
+    font-weight: 600 !important;
+    background-color: unset !important;
+    border-bottom: 2px solid #2F55A2;
+    border-radius: unset !important;
 }
 
-.nav-pills .nav-link.active{
+.nav-pills .nav-link.active {
     color: #2F55A2 !important;
 }
 
-.owl-carousel .nav-link{
+.owl-carousel .nav-link {
     color: #A1A1A1;
     margin: 0px !important;
     float: left;
-    
-    }
+
+}
 
 .owl-carousel.owl-drag .owl-item {
     float: left;
@@ -2619,16 +2656,16 @@ border-radius: unset !important;
     border-bottom: 1px solid #A1A1A1;
 }
 
-.owl-theme .owl-nav .owl-next{
+.owl-theme .owl-nav .owl-next {
     position: absolute;
     bottom: 0;
     right: -4%;
     background: url("/img/arrow-expand-right.png") !important;
     background-repeat: no-repeat !important;
-     top: 15%;
+    top: 15%;
 }
 
-.owl-theme .owl-nav .owl-prev{
+.owl-theme .owl-nav .owl-prev {
     position: absolute;
     bottom: 0;
     left: -1%;
@@ -2636,9 +2673,38 @@ border-radius: unset !important;
     background-repeat: no-repeat !important;
     top: 15%;
 }
+
 /* #inlineRadio2{margin-left: -1.3rem !important;} */
 
+#trainer-timings {
+    flex-direction: column !important;
+}
 
+.trainer-times {
+    float: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#swap-modal {
+    align-items: flex-start !important;
+}
+
+.trainer-opicty {
+    opacity: 0;
+    transition: ease-in-out 0.3s;
+    color: white;
+}
+
+.trainer-opicty:hover {
+    opacity: 1;
+    color: white;
+}
+.trainer-opicty:hover a{
+    color: white !important;
+    text-decoration: none !important
+}
 
 
 @media (max-width: 1566px) {}

@@ -1,23 +1,20 @@
 import axios from "axios";
 
-export default async function handler(req,res)
-{
-    if(req.method == "POST")
-    {
-        try {
-            const {token} = req.body
-            var config = {
-                method:"post",
-                url:"http://192.168.1.136:6000/api/v1/member/trainerlist",
-                headers:{
-                    Authorization: `Bearer ${token}`
-                },
-
-            }
-            const response=await axios(config)
-            res.status(200).json({data:response.data})
-        } catch (error) {
-            console.log("ERROR---->",error);
-        }
+export default async function handler(req, res) {
+  if (req.method == "POST") {
+    try {
+      const { token } = req.body;
+      var config = {
+        method: "post",
+        url: "http://134.122.64.108:3005/api/v1/member/trainerlist",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios(config);
+      res.status(200).json({ data: response.data });
+    } catch (error) {
+      console.log("ERROR---->", error);
     }
+  }
 }
