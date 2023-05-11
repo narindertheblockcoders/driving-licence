@@ -2652,6 +2652,9 @@ label {
     display: none !important;
 }
 
+/* option {
+    color: black;
+} */
 #pills-tab {
     border-bottom: 1px solid #A1A1A1;
 }

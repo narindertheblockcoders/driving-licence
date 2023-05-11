@@ -47,10 +47,11 @@ function Schedule() {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/getAllTrainer", { token: token });
       const response = res.data;
-     
+      //console.log(response, "all trainer data");
+      //console.log(response.data.data[0].trainerName, "to get the name");
       setAllTrainers(response.data.data);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -72,18 +73,22 @@ function Schedule() {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/getSchedules", { token: token });
       const response = res.data.data.data;
+      //console.log(response, "All Schedule data");
+
       setAllScheduleData(response);
     } catch (err) {
-      console.log(err, "all shedule error");
+      //console.log(err, "all shedule error");
     }
   }
 
   const DatePicker = (e) => {
+    //console.log("hellloooooooooooo", e.target.value);
     setDate3(null);
     const dateObj = new Date(e.target.value);
     const monthStr = dateObj.toLocaleString("default", { month: "short" });
     const formattedDateStr = `${dateObj.getFullYear()}-${monthStr}`;
     const convertedDate = formattedDateStr.split("-")[1];
+
     const dateObj1 = new Date(e.target.value);
     const year = dateObj1.getFullYear();
 
@@ -91,7 +96,10 @@ function Schedule() {
 
     const date2 = new Date(e.target.value).toLocaleDateString();
     const d = date2.split("/");
+    // //console.log(date2, d, 'date 2222');
+
     setYearMonth(`${d[2]}-${d[1]}`);
+    //console.log(convertedDate, " convertedDate");
     dayPicker(convertedDate);
   };
 
@@ -102,6 +110,7 @@ function Schedule() {
     const date2 = new Date().toLocaleDateString();
     const d = date2.split("/");
     const convertedDate = formattedDateStr.split("-")[1];
+    // //console.log(convertedDate, "ccccccccccccccccccccnnnnnnn");
     setYearMonth(`${d[2]}-${d[1]}`);
     setDate3(`${d[2]}-${d[1]}`);
     dayPicker(convertedDate);
@@ -109,6 +118,7 @@ function Schedule() {
 
   const dayPicker = (convertedDate) => {
     var temp = [];
+    // //console.log("hello");
     if (
       convertedDate == "Jan" ||
       convertedDate == "Mar" ||
@@ -145,19 +155,28 @@ function Schedule() {
         }
       }
     }
+
+    // //console.log(temp, "tempppppppppppppppppp");
+
     setDatePicker(temp);
   };
 
   async function filterData(item, i) {
+    //console.log(item, "iteme herer");
+
     setSelectedId(i);
     const filterValue = allScheduleData?.filter((item2) => {
       const dateValue = item2?.datesch;
+      // //console.log("object dateValue-->", dateValue);
       const date = new Date(dateValue);
       const day = date.getUTCDate().toString();
       const month = date.toLocaleString("default", { month: "short" });
       const formattedDate = `${day} ${month}`;
+      ///////////////////problem
+      // //console.log("first formattedDate--=-> ", formattedDate)
       return formattedDate == item;
     });
+    //console.log("first formattedDate--=-> ", filterValue);
     setDataByScheduleDate(filterValue);
   }
 
@@ -167,25 +186,34 @@ function Schedule() {
     const month1 = date1.toLocaleString("default", { month: "short" });
     const formattedDate1 = `${day1} ${month1}`;
 
+    // //console.log("object current date--->",formattedDate1);
+
     const filterValue = allScheduleData?.filter((item2) => {
       const dateValue = item2.datesch;
       const date = new Date(dateValue);
       const day = date.getUTCDate().toString();
       const month = date.toLocaleString("default", { month: "short" });
       const formattedDate = `${day} ${month}`;
+      // //console.log("object current date111111111--->",formattedDate);
       return formattedDate == formattedDate1;
     });
+    //console.log("first  filterValue", filterValue);
     setDataByScheduleDate(filterValue);
   }
+
+  // //console.log("object date--->", date);
 
   async function getAllLocation() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post("/api/location", { token: token });
       const response = res.data.data.data;
+
+      // //console.log(response, "all trainer data");
+
       setAllLocation(response);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   }
 
@@ -194,8 +222,9 @@ function Schedule() {
       const token = localStorage.getItem("token");
       const response = await axios.post("/api/vehicalstype", { token: token });
       setBookvehicle(response.data.data.data);
+      // //console.log("response.data.data.data===>:", response.data.data.data);
     } catch (error) {
-      console.log("error:", error);
+      //console.log("error:", error);
     }
   }
 
@@ -224,6 +253,7 @@ function Schedule() {
   };
 
   async function modalShowFn(item, item3) {
+    // //console.log("first eeeeeeeeeeee---------_>>", item)
     setDate(item3);
     setTrainerName(item.trainerName);
     setTrainerId(item.id);
@@ -238,6 +268,7 @@ function Schedule() {
 
   const SearchFn = (e) => {
     const search = e.target.value;
+    // //console.log(search, "searchhhhhhhhh");
     const filterData = allScheduleData?.filter((item) => {
       const name = item?.clientName
         ?.toLowerCase()
@@ -272,6 +303,8 @@ function Schedule() {
     );
     setTimeSchedule1(filteredData);
   }, [dataByScheduleDate]);
+
+  //console.log(dataByScheduleDate, "dataByScheduleDate");
 
   return (
     <>
@@ -424,6 +457,7 @@ function Schedule() {
                   <div className="innerpart-tabs Schedule" id="common-cls">
                     <div className="three-part">
                       {allTrainers?.map((item, id) => {
+                        // //console.log(dataByScheduleDate, "item");
                         return (
                           <div className="same-one-part">
                             <div className="head-one">
@@ -443,7 +477,7 @@ function Schedule() {
                                   return (
                                     <div className="trainer-timings">
                                       <span>{item1?.time}</span>
-                                      <div className="trainer-opcity" id="trainer-opcity">
+                                      <div className="trainer-opcity">
                                         <Link
                                           href=""
                                           className="trainerhover-btns"
@@ -464,7 +498,9 @@ function Schedule() {
                                 return (
                                   <>
                                     {
+                                      // dataByScheduleDate ? (
                                       dataByScheduleDate?.map((item2, id) => {
+                                        // console.log(id, "Mr. lob lob");
                                         if (
                                           item?.id == item2?.trainerId &&
                                           item1?.time?.split(" ")[0] ==

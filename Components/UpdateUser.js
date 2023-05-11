@@ -231,11 +231,7 @@ console.log("getuser by id ---------->",response.data.data.data[0])
           </form>
         </div>
       </section>
-      <section className="footer">
-        <div className="container">
-          <p>© 2023 Driving Schedule Software. All Rights Reserved.</p>
-        </div>
-      </section>
+ 
     </>
   )
 

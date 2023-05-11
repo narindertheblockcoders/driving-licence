@@ -25,6 +25,7 @@ function NewBooking() {
   const [vehicleType, setVehicleType] = useState()
   const [paymentResult, setPaymentResult] = useState("")
  
+  console.log(booklocation ,"nfrnf")
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -191,6 +192,8 @@ const handleChangeDate = (e) => {
   }, [formInputs.paidAmount])
 
 
+
+
   return (
     <>
       <ToastContainer />
@@ -236,6 +239,7 @@ const handleChangeDate = (e) => {
                   value={formInputs.licenseNo}
                   onChange={handleChange}
                   placeholder="License No."
+                  maxLength={10}
                 />
 
               </div>
@@ -247,7 +251,7 @@ const handleChangeDate = (e) => {
                   {booklocation?.map((item) => {
 
                     return (
-                      <option value={item.id}>{item.location}</option>
+                      <option value={item.id}>{item.place}</option>
                     )
                   })}
 
@@ -279,14 +283,15 @@ const handleChangeDate = (e) => {
               <div className="mb-3 booking-row">
                 <input
                   type="number"
-                  maxLength={10}
                   className="form-control"
                   id="book-input"
                   name="mobile"
                   value={formInputs.mobile}
-                  onChange={handleChange}
+                  onChange={ handleChange}
                   placeholder="Mobile"
-                />
+                  size={10}
+                  maxLength={10}
+                  />
               </div>
               <div className="mb-3 booking-row">
                
