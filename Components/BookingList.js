@@ -400,7 +400,7 @@ function BookingList() {
                           <>
                             <div key={idx} className="same-two-part ">
                               <div className="head-one">
-                                <h3>{item.location}</h3>
+                                <h3>{item.place}</h3>
                               </div>
 
                               {dataByDate?.map((item2, idx2) => {
